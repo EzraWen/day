@@ -5,6 +5,11 @@ import lombok.Data;
 @Data
 public class Result<T> {
 
+
+    public static final Result SUCCESS = new Result(MsgCode.CODE_SUCCESS,MsgCode.MSG_SUCCESS);
+    public static final Result BUSINESS_FAIL = new Result(MsgCode.CODE_BUSINESS_FAIL,MsgCode.MSG_BUSINESS_FAIL);
+    public static final Result UNAUTHORIZED = new Result(MsgCode.CODE_UNAUTHORIZED,MsgCode.MSG_UNAUTHORIZED);
+
     private int code;
     private String msg;
     private T data;
@@ -34,8 +39,13 @@ public class Result<T> {
         return this;
     }
 
-    public static final Result SUCCESS = new Result(MsgCode.CODE_SUCCESS,MsgCode.MSG_SUCCESS);
-    public static final Result BUSINESS_FAIL = new Result(MsgCode.CODE_BUSINESS_FAIL,MsgCode.MSG_BUSINESS_FAIL);
-    public static final Result UNAUTHORIZED = new Result(MsgCode.CODE_UNAUTHORIZED,MsgCode.MSG_UNAUTHORIZED);
+
+    public static <T> Result<T> data(T data){
+        return new Result(MsgCode.CODE_SUCCESS,MsgCode.MSG_SUCCESS,data);
+    }
+
+    public static Result fail(){
+        return BUSINESS_FAIL;
+    }
 
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(SystemConstant.API_URL)
+@RequestMapping(SystemConstant.API_URL + "/rabbitmq")
 public class SenderController {
 
     @Autowired

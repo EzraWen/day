@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping(SystemConstant.API_URL + "/ex")
+@RequestMapping(SystemConstant.API_URL + "/rabbitmq/exchange")
 public class ExchangeSenderController {
 
 

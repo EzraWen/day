@@ -13,6 +13,7 @@
 <!--        <module>comsumer</module>-->
         <module>core</module>
         <module>RabbitMQ</module>
+        <module>Redis</module>
     </modules>
 
     <parent>
@@ -25,8 +26,6 @@
     <properties>
         <core.version>1.0</core.version>
     </properties>
-
-
 
 
     <dependencies>

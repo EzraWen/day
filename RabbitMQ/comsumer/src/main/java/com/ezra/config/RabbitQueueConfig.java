@@ -19,6 +19,7 @@ import java.util.Map;
 @Configuration
 public class RabbitQueueConfig {
 
+    @Bean
     public Queue queue1() {
         return new Queue(RabbitMQConstant.QUEUE1);
     }
