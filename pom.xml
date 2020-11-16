@@ -9,9 +9,10 @@
     <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
-        <module>sender</module>
-        <module>comsumer</module>
+<!--        <module>sender</module>-->
+<!--        <module>comsumer</module>-->
         <module>core</module>
+        <module>RabbitMQ</module>
     </modules>
 
     <parent>
@@ -41,6 +42,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>18.0</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>5.5.0</version>
         </dependency>
     </dependencies>
 

@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>day</artifactId>
+        <artifactId>RabbitMQ</artifactId>
         <groupId>com.ezra</groupId>
         <version>1.0</version>
     </parent>
@@ -12,15 +12,4 @@
     <artifactId>comsumer</artifactId>
 
 
-    <dependencies>
-        <dependency>
-            <groupId>com.ezra</groupId>
-            <artifactId>core</artifactId>
-            <version>${core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-    </dependencies>
 </project>
