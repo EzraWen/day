@@ -58,8 +58,7 @@ public class RedisString {
     @PostMapping("/getObject")
     public Result getObject(@RequestParam("key") String key) throws IOException {
         Object val = redisTemplate.opsForValue().get(key);
-        ObjectMapper objectMapper = new ObjectMapper();
-        RedisValueDTO redisValueDTO = objectMapper.readValue((String) val, RedisValueDTO.class);
+        RedisValueDTO redisValueDTO = (RedisValueDTO) val;
         return Result.data(redisValueDTO);
     }
 

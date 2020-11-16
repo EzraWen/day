@@ -40,5 +40,5 @@ public class RedisValueDTO {
 
     private LinkedList linkedListVal;
 
-    private RedisObject redisObject;
+    private RedisObject redisObjectVal;
 }
