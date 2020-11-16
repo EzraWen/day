@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+/**
+ * MQ 消费者手动确认,消息点对点
+ */
 @Component
 public class StringMsgRecevier {
 
