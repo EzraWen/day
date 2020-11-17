@@ -15,6 +15,7 @@ public class ToolUtil {
             return true;
         }
 
+
         if (val instanceof String) {
             return EMPTY_STRING.equals(val);
         } else if (val instanceof List) {
