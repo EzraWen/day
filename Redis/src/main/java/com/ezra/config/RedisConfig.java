@@ -1,8 +1,8 @@
 package com.ezra.config;
 
+import com.ezra.constant.SystemConstant;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -10,6 +10,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import javax.annotation.PostConstruct;
+import java.text.SimpleDateFormat;
 
 @Configuration
 public class RedisConfig {
@@ -37,13 +38,11 @@ public class RedisConfig {
     private RedisSerializer<Object> valueSerializer() {
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper objectMapper = new ObjectMapper();
-        //SimpleModule simpleModule = new SimpleModule();
-        //objectMapper.registerModule(simpleModule);
         // 解决jackson2无法反序列化LocalDateTime的问题
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.registerModule(new JavaTimeModule());
-
         objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        objectMapper.setDateFormat(new SimpleDateFormat(SystemConstant.PATTERN_DATETIME));
         jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
         return jackson2JsonRedisSerializer;
     }

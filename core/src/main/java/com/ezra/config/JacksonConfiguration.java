@@ -58,7 +58,6 @@ public class JacksonConfiguration {
         //null字符串序列化处理
         objectMapper.getSerializerProvider().setNullValueSerializer(BeanSerializerModifier.NullJsonSerializers.STRING_JSON_SERIALIZER);
         //日期格式化
-        //日期格式化
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.findAndRegisterModules();
         return objectMapper;
