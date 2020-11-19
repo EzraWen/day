@@ -19,6 +19,7 @@ singleServerConfig:
   #在最新版本中dns的检查操作会直接报错 所以我直接注释掉了
   #dnsMonitoring: false
   dnsMonitoringInterval: 5000
-threads: 0
-nettyThreads: 0
+threads: 0        #官方解释:这个线程池数量被所有RTopic对象监听器，RRemoteService调用者和RExecutorService任务共同共享。                      默认值: 当前处理核数量 * 2
+nettyThreads: 0   #官方解释:这个线程池数量是在一个Redisson实例内，被其创建的所有分布式数据类型和服务，以及底层客户端所一同共享的线程池里保存的线程数量。默认值: 当前处理核数量 * 2
 codec: !<org.redisson.codec.JsonJacksonCodec> {}
+lockWatchdogTimeout: 12000   # 看门狗锁自动续期时间,这个配置下trylock不声明leaseTime时,锁过期时12秒,当锁过去三分之一时,也就是过去4秒时,自动续期到12秒  默认值：30000毫秒
