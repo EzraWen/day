@@ -11,5 +11,12 @@
 
     <artifactId>Thread</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.ezra</groupId>
+            <artifactId>core</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
