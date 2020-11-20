@@ -15,6 +15,7 @@
         <module>RabbitMQ</module>
         <module>Redis</module>
         <module>Thread</module>
+        <module>DataStructure</module>
     </modules>
 
     <parent>
