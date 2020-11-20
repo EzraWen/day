@@ -4,6 +4,7 @@ package com.ezra.controller;
 import com.ezra.constant.SystemConstant;
 import com.ezra.pool.ThreadPoolConfig;
 import com.ezra.task.OrderTask;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,14 +21,15 @@ import java.util.concurrent.TimeoutException;
 public class ThreadTestController {
 
 
-
+    @Autowired
+    private ExecutorService executorService;
 
 
     @GetMapping("/test")
     public void test(@RequestParam("product") String product){
-        ExecutorService threadPool = ThreadPoolConfig.THREAD_POOL;
+
         OrderTask orderTask = new OrderTask(product, 1l);
-        Future<Boolean> future = threadPool.submit(orderTask);
+        Future<Boolean> future = executorService.submit(orderTask);
 
         try {
             if (future.get(5l, TimeUnit.SECONDS)) {
@@ -40,5 +42,6 @@ public class ThreadTestController {
         } catch (TimeoutException e) {
             System.out.println("超时");
         }
+
     }
 }

@@ -48,4 +48,8 @@ public class Result<T> {
         return BUSINESS_FAIL;
     }
 
+    public static Result fail(String msg){
+        return new Result(MsgCode.CODE_BUSINESS_FAIL,msg);
+    }
+
 }

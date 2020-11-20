@@ -5,6 +5,7 @@ import com.ezra.dto.RedisObject;
 import com.ezra.dto.RedisValueDTO;
 import com.ezra.response.MsgCode;
 import com.ezra.response.Result;
+import com.ezra.service.RedisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,6 +24,8 @@ public class RedisString {
 
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private RedisService redisService;
 
     @PostMapping("/set")
     public Result set(@RequestParam("key") String key, @RequestParam("val") String val) {
@@ -60,6 +63,11 @@ public class RedisString {
         Object val = redisTemplate.opsForValue().get(key);
         RedisValueDTO redisValueDTO = (RedisValueDTO) val;
         return Result.data(redisValueDTO);
+    }
+
+    @PostMapping("/tr")
+    public Result test(){
+        return redisService.testTransaction();
     }
 
 
