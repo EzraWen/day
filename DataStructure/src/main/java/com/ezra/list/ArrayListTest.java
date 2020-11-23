@@ -14,7 +14,7 @@ public class ArrayListTest {
 
 
     /**
-     *
+     *  长度最大 =  integer最大值 （2的31次方 -1） - 8
      */
 
     public static void test(){
@@ -47,8 +47,8 @@ public class ArrayListTest {
 
 
     public static void main(String[] args) {
-//        test();
-        int oldCapacity = 10;
-        System.out.println(oldCapacity >> 1);
+        test();
+//        int oldCapacity = 10;
+//        System.out.println(oldCapacity >> 1);
     }
 }

@@ -2,7 +2,6 @@ package com.ezra.controller;
 
 
 import com.ezra.constant.SystemConstant;
-import com.ezra.pool.ThreadPoolConfig;
 import com.ezra.task.OrderTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +25,7 @@ public class ThreadTestController {
 
 
     @GetMapping("/test")
-    public void test(@RequestParam("product") String product){
+    public void test(@RequestParam("product") String product) {
 
         OrderTask orderTask = new OrderTask(product, 1l);
         Future<Boolean> future = executorService.submit(orderTask);
