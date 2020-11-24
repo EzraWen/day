@@ -3,6 +3,8 @@ package com.ezra.map;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -38,6 +40,23 @@ public class HashMapTest {
 //        vos.add(1);
 //        List<Integer> collect = vos.stream().filter(key(b -> b.intValue())).collect(Collectors.toList());
 //        System.out.println(collect);
+        /**
+         * 还需要补充的  为什么是链表8个节点后才转树？
+         * 树节点获取数据的逻辑？
+         * 树节点增加数据时，是怎么操作的？  红黑树
+         * 一致性哈希算法？
+         * 一致性哈希算法  节点上下线数据存储问题？
+         * 有什么方法减少哈希冲突？
+         * hash节点下线产生的数据漂移如何处理？
+         */
+
+
+        SortedMap<Integer, String> sortedMap = new TreeMap<>();
+        sortedMap.put(1,"1");
+        sortedMap.put(2,"1");
+        SortedMap<Integer, String> subMap = sortedMap.tailMap(1);
+        Integer firstKey = subMap.firstKey();
+        String s = subMap.get(firstKey);
 
     }
 
