@@ -16,6 +16,8 @@
         <module>Redis</module>
         <module>Thread</module>
         <module>DataStructure</module>
+        <module>Elasticsearch</module>
+        <module>MyBatis-Plus</module>
     </modules>
 
     <parent>
