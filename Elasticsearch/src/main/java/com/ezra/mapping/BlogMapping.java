@@ -2,6 +2,10 @@ package com.ezra.mapping;
 
 
 import com.ezra.constant.SystemConstant;
+import com.ezra.document.BlogCommentDocument;
+import com.ezra.document.BlogDocument;
+import com.ezra.repository.BlogCommentRepository;
+import com.ezra.repository.BlogRepository;
 import com.ezra.response.Result;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
 import org.elasticsearch.client.HttpAsyncResponseConsumerFactory;
@@ -15,9 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(SystemConstant.API_URL + "/mapping/blog")
@@ -27,6 +34,12 @@ public class BlogMapping {
     private RestHighLevelClient client;
     @Autowired
     private ElasticsearchRestTemplate restTemplate;
+    @Autowired
+    private BlogRepository blogRepository;
+    @Autowired
+    private BlogCommentRepository blogCommentRepository;
+
+
 
     private static final RequestOptions COMMON_OPTIONS;
 
@@ -39,12 +52,13 @@ public class BlogMapping {
         COMMON_OPTIONS = builder.build();
     }
 
+
     /**
      * 用于创建新的mapping
      *
      * @return
      */
-    @PostMapping("/mapping")
+    @PostMapping("/init")
     public Result createMapping() throws IOException {
 
         //创建索引blog
@@ -53,35 +67,41 @@ public class BlogMapping {
         XContentBuilder builder = null;
         builder = XContentFactory.jsonBuilder()
                 .startObject()
-                .startObject("blog_data")
-                .startObject("_all")
-                //关闭_all字段
-                .field("enabled", false)
-                .endObject()
-                .startObject("_source")
-                //关闭_source字段
-                .field("enabled", false)
-                .endObject()
-                //properties：列出了文档中可能包含的每个字段的映射
+                .startObject("properties")
+                .startObject("blog")
                 .startObject("properties")
                 .startObject("id")
-                .field("type", "integer")
-                .field("store", true)
+                .field("type", "long")
                 .endObject()
                 .startObject("title")
-                .field("type", "string")
-                .field("not_analyzed", "false")
+                .field("type", "text")
+                .field("index", false)
                 .endObject()
                 .startObject("addtime")
                 .field("type", "date")
                 .field("format", "yyyy-MM-dd HH:mm:ss")
                 .endObject()
-                .startObject("relation_type")
+                .endObject()
+                .endObject()
+
+
+                .startObject("comment")
+                .startObject("properties")
+                .startObject("id")
+                .field("type", "long")
+                .endObject()
+                .startObject("ramark")
+                .field("type", "text")
+                .field("index", false)
+                .endObject()
+                .endObject()
+                .endObject()
+
+
+                .startObject("relation")
                 .field("type", "join")
-                .field("eager_global_ordinals", true)
                 .startObject("relations")
                 .field("blog", "comment")
-                .endObject()
                 .endObject()
                 .endObject()
                 .endObject()
@@ -95,4 +115,78 @@ public class BlogMapping {
         client.indices().putMapping(mapping, COMMON_OPTIONS);
         return Result.SUCCESS;
     }
+
+
+
+    @PostMapping("/add")
+    public Result add(){
+        BlogDocument blogDocument = new BlogDocument();
+        blogDocument.setId(1l);
+        blogDocument.setTitle("第一个文章");
+        blogDocument.setAddTime(LocalDateTime.now());
+        blogRepository.save(blogDocument);
+        return Result.SUCCESS;
+    }
+
+    @PostMapping("/get")
+    public Result get(@RequestParam("id") Integer id){
+        Optional<BlogDocument> byId = blogRepository.findById(Long.valueOf(id));
+        return byId.isPresent() ? Result.data(byId.get()) : Result.data(null);
+    }
+
+    @PostMapping("/getComment")
+    public Result getComment(@RequestParam("id") Integer id){
+        Optional<BlogCommentDocument> byId = blogCommentRepository.findById(Long.valueOf(id));
+        return byId.isPresent() ? Result.data(byId.get()) : Result.data(null);
+    }
+
+
+    @PostMapping("/addComment")
+    public Result addComment(){
+        BlogCommentDocument blogCommentDocument = new BlogCommentDocument();
+        blogCommentDocument.setId(1l);
+        blogCommentDocument.setRemark("第一条评论");
+        blogCommentDocument.setParent(1l);
+        blogCommentRepository.save(blogCommentDocument);
+        return Result.SUCCESS;
+    }
+
+
+
+//    {
+//        "properties": {
+//        "parent": {
+//            "properties": {
+//                "id": {
+//                    "type": "integer"
+//                },
+//                "parentName": {
+//                    "type": "text"
+//                }
+//            }
+//        },
+//        "child": {
+//            "properties": {
+//                "id": {
+//                    "type": "integer"
+//                },
+//                "childName": {
+//                    "type": "text"
+//                },
+//                "parentId": {
+//                    "type": "integer"
+//                }
+//            }
+//        },
+//        "relation": {
+//            "type": "join",
+//             "relations": {
+//                "parent": [
+//                "child"
+//        ]
+//            }
+//        }
+//    }
+//    }
+
 }
