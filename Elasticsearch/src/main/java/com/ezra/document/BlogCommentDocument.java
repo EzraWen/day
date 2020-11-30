@@ -3,7 +3,6 @@ package com.ezra.document;
 import lombok.Data;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,15 +10,17 @@ import java.util.Map;
 @Document(indexName = "blog_data", createIndex = false, shards = 1, replicas = 5)
 public class BlogCommentDocument {
 
+//    shard = hash(routing) % number_of_primary_shards
 
     private Long id;
     private String remark;
 
-    private BaseRelation relation;
 
-    public void setParent(Long parentId){
-        relation =new BaseRelation();
-        relation.setParent(parentId);
-        relation.setName("comment");
+    private Map<String, Object> relation;
+
+    public void setParent(Long parentId) {
+        relation = new HashMap<>();
+        relation.put("name", "comment");
+        relation.put("parent", parentId);
     }
 }

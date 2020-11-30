@@ -7,6 +7,7 @@ import com.ezra.document.BlogDocument;
 import com.ezra.repository.BlogCommentRepository;
 import com.ezra.repository.BlogRepository;
 import com.ezra.response.Result;
+import com.ezra.service.IBlogService;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
 import org.elasticsearch.client.HttpAsyncResponseConsumerFactory;
 import org.elasticsearch.client.RequestOptions;
@@ -38,7 +39,8 @@ public class BlogMapping {
     private BlogRepository blogRepository;
     @Autowired
     private BlogCommentRepository blogCommentRepository;
-
+    @Autowired
+    private IBlogService blogService;
 
 
     private static final RequestOptions COMMON_OPTIONS;
@@ -117,9 +119,8 @@ public class BlogMapping {
     }
 
 
-
     @PostMapping("/add")
-    public Result add(){
+    public Result add() {
         BlogDocument blogDocument = new BlogDocument();
         blogDocument.setId(1l);
         blogDocument.setTitle("第一个文章");
@@ -129,28 +130,29 @@ public class BlogMapping {
     }
 
     @PostMapping("/get")
-    public Result get(@RequestParam("id") Integer id){
-        Optional<BlogDocument> byId = blogRepository.findById(Long.valueOf(id));
+    public Result get(@RequestParam("id") Long id) {
+        Optional<BlogDocument> byId = blogRepository.findById(id);
         return byId.isPresent() ? Result.data(byId.get()) : Result.data(null);
     }
 
     @PostMapping("/getComment")
-    public Result getComment(@RequestParam("id") Integer id){
-        Optional<BlogCommentDocument> byId = blogCommentRepository.findById(Long.valueOf(id));
+    public Result getComment(@RequestParam("id") Long id) {
+        Optional<BlogCommentDocument> byId = blogCommentRepository.findById(id);
         return byId.isPresent() ? Result.data(byId.get()) : Result.data(null);
     }
 
 
     @PostMapping("/addComment")
-    public Result addComment(){
+    public Result addComment(@RequestParam("id") Long id) throws IOException {
         BlogCommentDocument blogCommentDocument = new BlogCommentDocument();
-        blogCommentDocument.setId(1l);
-        blogCommentDocument.setRemark("第一条评论");
+        blogCommentDocument.setId(id);
+        blogCommentDocument.setRemark("第二条评论");
         blogCommentDocument.setParent(1l);
-        blogCommentRepository.save(blogCommentDocument);
-        return Result.SUCCESS;
+        Boolean result = blogService.insertChild("blog_data", String.valueOf(blogCommentDocument.getId()),
+                "1", blogCommentDocument);
+//        blogCommentRepository.save(blogCommentDocument);
+        return result ? Result.SUCCESS : Result.BUSINESS_FAIL;
     }
-
 
 
 //    {
