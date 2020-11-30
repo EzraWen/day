@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -146,12 +147,18 @@ public class BlogMapping {
     public Result addComment(@RequestParam("id") Long id) throws IOException {
         BlogCommentDocument blogCommentDocument = new BlogCommentDocument();
         blogCommentDocument.setId(id);
-        blogCommentDocument.setRemark("第二条评论");
+        blogCommentDocument.setRemark("评论" + id);
         blogCommentDocument.setParent(1l);
         Boolean result = blogService.insertChild("blog_data", String.valueOf(blogCommentDocument.getId()),
                 "1", blogCommentDocument);
-//        blogCommentRepository.save(blogCommentDocument);
         return result ? Result.SUCCESS : Result.BUSINESS_FAIL;
+    }
+
+
+    @PostMapping("/getCommentByParent")
+    public Result getCommentByParent(@RequestParam("id") Long id) throws IOException {
+        List<BlogCommentDocument> comment = blogService.getByParentId(id, "comment", BlogCommentDocument.class);
+        return Result.SUCCESS;
     }
 
 
