@@ -17,4 +17,5 @@ public interface ElasticSearchService {
     Boolean insertChild(String index,String id,String routing,Object source) throws IOException;
 
     <T> List<T> getByParentId(Long parentId,String childIndex,Class<T> childClass) throws IOException;
+
 }

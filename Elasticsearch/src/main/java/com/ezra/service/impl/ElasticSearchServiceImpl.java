@@ -1,6 +1,8 @@
 package com.ezra.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.ezra.service.ElasticSearchService;
 import com.ezra.util.ToolUtil;
 import org.elasticsearch.action.index.IndexRequest;
@@ -10,8 +12,11 @@ import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.stereotype.Service;
@@ -49,16 +54,23 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         if (annotation == null || ToolUtil.isEmpty(annotation.indexName())) {
             return Collections.emptyList();
         }
+        BoolQueryBuilder query = QueryBuilders.boolQuery();
+        query.mustNot(QueryBuilders.termQuery("id",parentId));
+
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        sourceBuilder.query(query);
+
         String indexName = annotation.indexName();
         SearchRequest searchRequest = new SearchRequest(indexName);
         searchRequest.routing(String.valueOf(parentId));
+        searchRequest.source(sourceBuilder);
         SearchResponse search = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
         SearchHits hits = search.getHits();
         Iterator<SearchHit> iterator = hits.iterator();
         List<T> data = new ArrayList<>();
+
         while (iterator.hasNext()) {
-            SearchHit next = iterator.next();
-            T t = BeanUtil.toBean(next.getSourceAsString(), childClass);
+            T t = JSON.parseObject(iterator.next().getSourceAsString(),childClass);
             data.add(t);
         }
         return data;

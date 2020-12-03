@@ -14,6 +14,7 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.Requests;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,19 +44,6 @@ public class BlogMapping {
     @Autowired
     private IBlogService blogService;
 
-
-    private static final RequestOptions COMMON_OPTIONS;
-
-    static {
-        RequestOptions.Builder builder = RequestOptions.DEFAULT.toBuilder();
-        builder.addHeader("Authorization", "kyle " + "TOKEN");
-        builder.setHttpAsyncResponseConsumerFactory(
-                new HttpAsyncResponseConsumerFactory
-                        .HeapBufferedResponseConsumerFactory(200 * 1024 * 1024));
-        COMMON_OPTIONS = builder.build();
-    }
-
-
     /**
      * 用于创建新的mapping
      *
@@ -65,7 +53,9 @@ public class BlogMapping {
     public Result createMapping() throws IOException {
 
         //创建索引blog
-        client.indices().create(new CreateIndexRequest("blog_data"), COMMON_OPTIONS);
+        CreateIndexRequest blogData = new CreateIndexRequest("blog_data");
+        blogData.settings(Settings.builder().put("index.number_of_shards", 2).put("index.number_of_replicas", 0));
+        client.indices().create(blogData, RequestOptions.DEFAULT);
 
         XContentBuilder builder = null;
         builder = XContentFactory.jsonBuilder()
@@ -115,7 +105,7 @@ public class BlogMapping {
                 .putMappingRequest("blog_data")
                 .type("blog_data")
                 .source(builder);
-        client.indices().putMapping(mapping, COMMON_OPTIONS);
+        client.indices().putMapping(mapping, RequestOptions.DEFAULT);
         return Result.SUCCESS;
     }
 
@@ -147,7 +137,7 @@ public class BlogMapping {
     public Result addComment(@RequestParam("id") Long id) throws IOException {
         BlogCommentDocument blogCommentDocument = new BlogCommentDocument();
         blogCommentDocument.setId(id);
-        blogCommentDocument.setRemark("评论" + id);
+        blogCommentDocument.setRemark("评论111" + id);
         blogCommentDocument.setParent(1l);
         Boolean result = blogService.insertChild("blog_data", String.valueOf(blogCommentDocument.getId()),
                 "1", blogCommentDocument);
@@ -158,7 +148,7 @@ public class BlogMapping {
     @PostMapping("/getCommentByParent")
     public Result getCommentByParent(@RequestParam("id") Long id) throws IOException {
         List<BlogCommentDocument> comment = blogService.getByParentId(id, "comment", BlogCommentDocument.class);
-        return Result.SUCCESS;
+        return Result.data(comment);
     }
 
 
