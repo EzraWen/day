@@ -17,6 +17,7 @@
         <module>Thread</module>
         <module>DataStructure</module>
         <module>Elasticsearch</module>
+        <module>MyBatisPlus</module>
     </modules>
 
     <parent>
