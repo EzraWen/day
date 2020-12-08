@@ -1,9 +1,6 @@
 package com.ezra.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -35,26 +32,6 @@ import lombok.EqualsAndHashCode;
      * 用户状态，0删除1正常
      */
       private Integer status;
-
-      private LocalDateTime createTime;
-
-      private LocalDateTime updateTime;
-
-      private String password;
-
-      private String salt;
-
-      private String remark1;
-      private String remark2;
-      private String remark3;
-
-      private Long createUser;
-
-      private Long lastUpdateUser;
-
-      private String mobilePhone;
-
-      private String email;
 
 
 }

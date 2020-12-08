@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @Configuration
-@MapperScan("com.ezra.*")
+@MapperScan("com.ezra.mapper")
 public class MybatisPlusConfig {
 
     @Bean

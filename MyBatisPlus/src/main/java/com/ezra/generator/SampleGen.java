@@ -24,30 +24,35 @@ import java.util.Scanner;
  */
 public class SampleGen {
     /**  项目输出包路径 */
-    private static final String PARENT = "com.xyedu.gradjob.openplatform.provider.recruit";
+    private static final String PARENT = "com.ezra";
     /**  项目输出路径 */
-    private static final String OUTPUT_DIR = "/gradjob-openplatform/gradjob-openplatform-provider/gradjob-openplatform-recruit-service/src/main/java";
+    private static final String OUTPUT_DIR = "/src/main/java";
 
 
     /**  需求生成代码对应的数据库表 */
     private static  String[] INCLUDE_TABLE;
     static {
-        String table = "code_career_type";
+        String table = "user";
         INCLUDE_TABLE = table.split(", ");
     }
     /**  作者 */
-    private static final String AUTHOR = "yan sai";
+    private static final String AUTHOR = "Ezra Wen";
 
     public static void main(String[] args) {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
         String projectPath = System.getProperty("user.dir");
+
         // 全局配置
         GlobalConfig gc = configGlobal(projectPath);
         mpg.setGlobalConfig(gc);
+
+
         // 数据源配置
         DataSourceConfig dsc = configDb();
         mpg.setDataSource(dsc);
+
+
         // 包配置
         PackageConfig pc = new PackageConfig();
 //        pc.setModuleName(MOUDLE_NAME);
@@ -111,7 +116,7 @@ public class SampleGen {
 
     private static DataSourceConfig configDb(){
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://192.168.1.205:3306/gdrecruit?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai");
+        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/day?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
