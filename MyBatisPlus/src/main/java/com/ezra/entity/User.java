@@ -26,10 +26,13 @@ import lombok.EqualsAndHashCode;
      */
       private Long id;
 
+      private String cUserId;
+
+
       /**
      * 用户名称
      */
-      private String name;
+      private String cName;
 
       /**
      * 用户状态，0删除1正常
@@ -40,21 +43,10 @@ import lombok.EqualsAndHashCode;
 
       private LocalDateTime updateTime;
 
-      private String password;
 
-      private String salt;
+      private Long cProvinceId;
 
-      private String remark1;
-      private String remark2;
-      private String remark3;
-
-      private Long createUser;
-
-      private Long lastUpdateUser;
-
-      private String mobilePhone;
-
-      private String email;
+      private Long cCityId;
 
 
 }
