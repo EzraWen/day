@@ -14,9 +14,4 @@ public class BasePage {
         return (current -1) * size;
     }
 
-
-
-
-
-
 }

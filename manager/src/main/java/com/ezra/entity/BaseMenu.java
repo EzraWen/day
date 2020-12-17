@@ -45,11 +45,11 @@ public class BaseMenu implements Serializable {
 
     private LocalDateTime createTime;
 
-    private Long createUserId;
+    private String createUser;
 
     private LocalDateTime updateTime;
 
-    private Long updateUserId;
+    private String updateUser;
 
 
 }

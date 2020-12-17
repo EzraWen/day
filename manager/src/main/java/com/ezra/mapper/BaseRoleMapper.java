@@ -1,7 +1,13 @@
 package com.ezra.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ezra.dto.RolePageDTO;
 import com.ezra.entity.BaseRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ezra.vo.RoleVO;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +19,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface BaseRoleMapper extends BaseMapper<BaseRole> {
 
+    List<RoleVO> rolePage(IPage page, @Param("dto") RolePageDTO dto);
 }
