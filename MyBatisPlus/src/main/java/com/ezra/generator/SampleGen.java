@@ -32,8 +32,8 @@ public class SampleGen {
     /**  需求生成代码对应的数据库表 */
     private static  String[] INCLUDE_TABLE;
     static {
-        String table = "user";
-        INCLUDE_TABLE = table.split(", ");
+        String table = "user,base_menu,base_resource,base_role,base_role_menu,base_role_resource,base_user_role";
+        INCLUDE_TABLE = table.split(",");
     }
     /**  作者 */
     private static final String AUTHOR = "Ezra Wen";
@@ -116,7 +116,7 @@ public class SampleGen {
 
     private static DataSourceConfig configDb(){
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/day?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai");
+        dsc.setUrl("jdbc:mysql://81.69.234.118:9200/day?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");

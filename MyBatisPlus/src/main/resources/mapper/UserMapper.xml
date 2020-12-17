@@ -4,17 +4,17 @@
 
 
     <select id="pageQuery" resultType="com.ezra.vo.UserVO">
-        select id,c_user_id userId, c_name userName, c_province_id provinceId, c_city_id cityId, create_time,update_time
+        select id,user_id userId, name userName, province_id provinceId, city_id cityId, create_time,update_time
         from user
         where status =1
         <if test="dto.name != null and dto.name !=''">
-            and c_name like concat(#{dto.name},"%")
+            and name like concat(#{dto.name},"%")
         </if>
         <if test="dto.provinceId != null">
-            and c_province_id = #{dto.provinceId}
+            and province_id = #{dto.provinceId}
         </if>
         <if test="dto.cityId != null">
-            and c_city_id =#{dto.cityId}
+            and city_id =#{dto.cityId}
         </if>
 
         order by update_time desc
@@ -22,19 +22,19 @@
     <select id="pageQuery2" resultType="com.ezra.vo.UserVO">
         -- MySQL 高性能推荐的写法
         -- 千万级别的表 分页查询join的优化写法，目前优化的速度在1000000 offset情况下约为1s左右
-        select id,c_user_id userId, c_name userName, c_province_id provinceId, c_city_id cityId, create_time,update_time
+        select id,user_id userId, name userName, province_id provinceId, city_id cityId, create_time,update_time
         from user
         inner join  (
             select id from user
             where status =1
             <if test="dto.name != null and dto.name !=''">
-                and c_name like concat(#{dto.name},"%")
+                and name like concat(#{dto.name},"%")
             </if>
             <if test="dto.provinceId != null">
-                and c_province_id = #{dto.provinceId}
+                and province_id = #{dto.provinceId}
             </if>
             <if test="dto.cityId != null">
-                and c_city_id =#{dto.cityId}
+                and city_id =#{dto.cityId}
             </if>
             order by update_time desc
             limit #{dto.startNum}, #{dto.size}
@@ -46,13 +46,13 @@
         select count(id) from user
         where status =1
         <if test="dto.name != null and dto.name !=''">
-            and c_name like concat(#{dto.name},"%")
+            and name like concat(#{dto.name},"%")
         </if>
         <if test="dto.provinceId != null">
-            and c_province_id = #{dto.provinceId}
+            and province_id = #{dto.provinceId}
         </if>
         <if test="dto.cityId != null">
-            and c_city_id =#{dto.cityId}
+            and city_id =#{dto.cityId}
         </if>
     </select>
 </mapper>

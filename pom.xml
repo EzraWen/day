@@ -18,6 +18,7 @@
         <module>DataStructure</module>
         <module>Elasticsearch</module>
         <module>MyBatisPlus</module>
+        <module>manager</module>
     </modules>
 
     <parent>
