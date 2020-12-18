@@ -1,5 +1,7 @@
 package com.ezra.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,6 +22,7 @@ public class BaseRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId
     private Long roleId;
 
     /**
@@ -35,6 +38,7 @@ public class BaseRole implements Serializable {
     /**
      * 1正常 0删除
      */
+    @TableLogic
     private Boolean status;
 
     private LocalDateTime createTime;

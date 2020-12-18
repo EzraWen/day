@@ -1,6 +1,7 @@
 package com.ezra.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ezra.constant.AddOperation;
 import com.ezra.constant.UpdateOperation;
@@ -42,11 +43,10 @@ public class BaseRoleServiceImpl extends ServiceImpl<BaseRoleMapper, BaseRole> i
             return Result.fail(String.format(AddOperation.TIP_MESSAGE_FAIL,"角色id不能有值"));
         }
         BaseRole role = new BaseRole();
-        try {
-            BeanUtils.copyProperties(dto,role);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        role.setType(dto.getType());
+        role.setRoleName(dto.getRoleName());
+        role.setRoleId(IdWorker.getId());
         role.setStatus(Boolean.TRUE);
         LocalDateTime now = LocalDateTime.now();
         role.setCreateTime(now);
@@ -62,12 +62,9 @@ public class BaseRoleServiceImpl extends ServiceImpl<BaseRoleMapper, BaseRole> i
         if (ToolUtil.isEmpty(role)) {
             return Result.fail(UpdateOperation.TIP_MESSAGE_NO_EXIST);
         }
-        try {
-            BeanUtils.copyProperties(dto,role);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
+        role.setType(dto.getType());
+        role.setRoleName(dto.getRoleName());
         role.setUpdateTime(LocalDateTime.now());
         role.setUpdateUser(UserUtil.getCurrentUserName());
 

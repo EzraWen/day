@@ -1,6 +1,6 @@
 package com.ezra.constant;
 
-public class AddOperation {
+public interface AddOperation {
 
     public static final String TIP_MESSAGE_FAIL = "新增失败，原因：%s";
 

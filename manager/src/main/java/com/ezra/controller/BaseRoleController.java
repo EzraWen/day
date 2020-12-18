@@ -2,6 +2,7 @@ package com.ezra.controller;
 
 
 import com.ezra.constant.AddOperation;
+import com.ezra.constant.SystemConstant;
 import com.ezra.constant.UpdateOperation;
 import com.ezra.dto.RoleDTO;
 import com.ezra.dto.RolePageDTO;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-12-17
  */
 @RestController
-@RequestMapping("/role")
+@RequestMapping(SystemConstant.API_URL +"/role")
 public class BaseRoleController {
 
 
@@ -55,7 +56,6 @@ public class BaseRoleController {
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable("id") Long id){
         return roleService.roleDelete(id);
-
     }
 
     @GetMapping("/{id}")
