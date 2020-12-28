@@ -6,10 +6,13 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.annotation.PostConstruct;
@@ -58,6 +61,15 @@ public class RedisConfig {
     @Bean
     public PlatformTransactionManager transactionManager(DataSource dataSource) throws SQLException {
         return new DataSourceTransactionManager(dataSource);
+    }
+
+
+    @Bean
+    public DefaultRedisScript<Number> redisRateLimitScript(){
+        DefaultRedisScript<Number> script = new DefaultRedisScript<>();
+        script.setScriptSource(new ResourceScriptSource(new ClassPathResource("rateLimit.lua")));
+        script.setResultType(Number.class);
+        return script;
     }
 }
 
