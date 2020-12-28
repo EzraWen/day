@@ -37,11 +37,8 @@ public class LimitAspect {
         Class<?> declaringClass = method.getDeclaringClass();
         RateLimit annotation = method.getAnnotation(RateLimit.class);
         String key = null;
-
         if (annotation !=null) {
-
             int count = annotation.count();
-            int time = annotation.time();
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             String ipAddress = getIpAddr(request);
             StringBuffer keyBuffer = new StringBuffer();
@@ -50,17 +47,18 @@ public class LimitAspect {
                     .append(method.getName()).append("-")
                     .append(annotation.key());
             key = keyBuffer.toString();
-            Number number = (Number) redisTemplate.execute(redisScript, Collections.singletonList(key), count, time);
+            Number number = (Number) redisTemplate.execute(redisScript, Collections.singletonList(key), count, annotation.time());
             if (number != null && number.intValue()!=0&&number.intValue() <= count) {
-                //放行
+                //还没有达到限制，放行
                 log.info("限流时间段内第{}次访问",number.intValue());
                 return joinPoint.proceed();
             }
         }else {
-            //放行
+            //没有限流的方法，放行
             return joinPoint.proceed();
         }
 
+        //达到限流次数
         Long expire =  redisTemplate.getExpire("rate:limit:"+key);
         String message = expire >0 ? String.format("已经到设置限流次数,请%d秒后再试",expire) : "已经到设置限流次数";
         return Result.fail(message);
