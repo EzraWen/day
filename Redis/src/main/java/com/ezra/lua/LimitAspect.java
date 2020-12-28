@@ -61,9 +61,6 @@ public class LimitAspect {
             return joinPoint.proceed();
         }
 
-//        throw new RuntimeException("");
-//        Long expire = redisTemplate.opsForValue().getOperations().getExpire(key);
-
         Long expire =  redisTemplate.getExpire("rate:limit:"+key);
         String message = expire >0 ? String.format("已经到设置限流次数,请%d秒后再试",expire) : "已经到设置限流次数";
         return Result.fail(message);
