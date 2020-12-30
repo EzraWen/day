@@ -4,11 +4,11 @@
 
 
     <select id="getById" resultType="com.ezra.entity.User">
-        select id id,c_user_id userId,c_name name,c_province_id provinceId,c_city_id cityId,create_time,update_time,status
+        select *
         from user where id =#{id} and status =1  limit 1
     </select>
     <select id="getByIdDTO" resultType="com.ezra.entity.User">
-        select id id,c_user_id userId,c_name name,c_province_id provinceId,c_city_id cityId,create_time,update_time,status
+        select *
         from user where id =#{dto.id} and status =1  limit 1
     </select>
 </mapper>

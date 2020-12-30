@@ -58,7 +58,7 @@ public class DataSourceAspect {
         //工具类判断规则
         String source = rule.getSource();
         Object value = null;
-        if (conditions.indexOf("\\|") < 0) {
+        if (conditions.indexOf("|") < 0) {
             dbHelper.setDBType(dbType = DBHelper.DB_TYPE_NEW);
         } else {
             String valueMethod = conditions.split("\\|")[1];
@@ -92,11 +92,9 @@ public class DataSourceAspect {
 
         }
 
-
         dbHelper.setDBType(dbType = DBSelectUtil.getByRule(source,value));
         log.info("查询库:{}", dbType);
     }
-
 
     @After("JoinPoint()")
     public void removeDataSourceKey() {

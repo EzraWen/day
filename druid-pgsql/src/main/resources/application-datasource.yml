@@ -4,7 +4,7 @@ spring:
       driverClassName: com.mysql.jdbc.Driver
       username: root
       password: 123456
-      url: jdbc:mysql://127.0.0.1:3306/day?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://81.69.234.118:9200/day?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
       type: com.alibaba.druid.pool.DruidDataSource
     historydb: #历史库
       #      jdbc-url: jdbc:postgresql://127.0.0.1:5432/test1
@@ -17,7 +17,7 @@ spring:
       driverClassName: com.mysql.jdbc.Driver
       username: root
       password: 123456
-      url: jdbc:mysql://127.0.0.1:3306/day2?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://81.69.234.118:9200/day2?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
       type: com.alibaba.druid.pool.DruidDataSource
 
     # ============================== druid ============================== #
