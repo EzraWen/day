@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezra.mapper.UserEntityMapper">
+
+
+    <select id="getById" resultType="com.ezra.entity.User">
+        select id id,c_user_id userId,c_name name,c_province_id provinceId,c_city_id cityId,create_time,update_time,status
+        from user where id =#{id} and status =1  limit 1
+    </select>
+    <select id="getByIdDTO" resultType="com.ezra.entity.User">
+        select id id,c_user_id userId,c_name name,c_province_id provinceId,c_city_id cityId,create_time,update_time,status
+        from user where id =#{dto.id} and status =1  limit 1
+    </select>
+</mapper>

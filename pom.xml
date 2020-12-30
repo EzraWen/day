@@ -19,6 +19,7 @@
         <module>Elasticsearch</module>
         <module>MyBatisPlus</module>
         <module>manager</module>
+        <module>druid-pgsql</module>
     </modules>
 
     <parent>
