@@ -27,6 +27,12 @@ public class RedisSet {
         return Result.SUCCESS;
     }
 
+    @PostMapping("/setString")
+    public Result setString(@RequestParam("key") String key,@RequestParam("str") String str){
+        redisTemplate.opsForSet().add(key,str);
+        return Result.SUCCESS;
+    }
+
     /**
      * key1和key2的集合元素不同的 ,只返回key1中的数据,不会改变原数据,仅返回结果
      * @param key1
