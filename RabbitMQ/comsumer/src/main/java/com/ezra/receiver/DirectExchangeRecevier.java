@@ -25,7 +25,7 @@ public class DirectExchangeRecevier {
      */
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(value = "direct1",autoDelete = "true"),
-            exchange = @Exchange(RabbitMQConstant.DIRECT_EXCHANGE),
+            exchange = @Exchange(value = RabbitMQConstant.DIRECT_EXCHANGE),
             key = {"info","error"}
     ))
     public void direct1(Channel channel, Message message) throws IOException {

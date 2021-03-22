@@ -3,6 +3,7 @@ package com.ezra.config;
 import com.ezra.constant.RabbitMQConstant;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.HeadersExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
@@ -21,6 +22,18 @@ public class RabbitQueueConfig {
 
     @Bean
     public Queue queue1() {
+        /**
+         * Queue参数
+         * string name          队列名
+         * boolean durable      是否持久化   默认为true
+         * boolean exclusive    是否排外    只需允许当前连接使用,其他连接不可使用,当前连接关系时清空,不论是否持久化,默认为false
+         * boolean autoDelete   是否自动删除 最后一个connection断开时,默认为false
+         * Map<String, Object> arguments   构建队列时传递的参数
+         * arguments 常用的有
+         * x-message-ttl                队列消息ttl
+         * x-dead-letter-exchange       队列产生死信后转发的交换机
+         * x-dead-letter-routing-key    队列产生死信后转发的路由Key
+         */
         return new Queue(RabbitMQConstant.QUEUE1);
     }
 
@@ -33,6 +46,58 @@ public class RabbitQueueConfig {
     public Queue queue2() {
         return new Queue(RabbitMQConstant.QUEUE2);
     }
+
+
+    /**
+     * 产生死信的队列
+     * @return
+     */
+    @Bean
+    public Queue queueDelay() {
+        Map<String, Object> arguments = new HashMap<>();
+        arguments.put("x-message-ttl",5000);   //5秒后变成死信转发到实际交换机
+        arguments.put("x-dead-letter-exchange","exchange_real");  //转发的交换机
+        arguments.put("x-dead-letter-routing-key","delayKey");    //转发的key
+        return new Queue(RabbitMQConstant.QUEUE3,true,false,false,arguments);
+    }
+
+//    /**
+//     *
+//     * 创建延迟队列（死信队列）绑定的交换机
+//     */
+//    @Bean
+//    public DirectExchange ttlExchange(){
+//        return new DirectExchange("ttlExchange",true,false);
+//    }
+//
+//    /**
+//     * 绑定延迟队列（死信队列）到交换机
+//     */
+//    @Bean
+//    public Binding demoTtlBinding(){
+//        return new Binding("queueTTL", Binding.DestinationType.QUEUE,"ttlExchange","ttlRoutes",null);
+//    }
+
+    @Bean
+    public Queue queueReal() {
+        return new Queue(RabbitMQConstant.QUEUE4);
+    }
+
+    @Bean
+    public DirectExchange delayDirectExchange() {
+        return new DirectExchange("exchange_real");
+    }
+
+    @Bean
+    public Binding bindingDelay(@Qualifier("queueReal") Queue queue,
+                            @Qualifier("delayDirectExchange") DirectExchange directExchange) {
+        return BindingBuilder.bind(queue).to(directExchange).with("delayKey");
+    }
+
+
+
+
+
 
 
     /**

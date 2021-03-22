@@ -5,6 +5,8 @@ public class RabbitMQConstant {
 
     public static final String QUEUE1 = "queue1";
     public static final String QUEUE2 = "queue2";
+    public static final String QUEUE3 = "queueTTL";   //延时队列
+    public static final String QUEUE4 = "queueReal";   //真实消费队列
 
 
     public static final  String FANOUT_EXCHANGE = "fanout";     //广播

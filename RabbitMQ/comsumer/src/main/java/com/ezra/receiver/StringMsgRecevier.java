@@ -47,5 +47,10 @@ public class StringMsgRecevier {
 
     }
 
+    @RabbitListener(queues = RabbitMQConstant.QUEUE4)
+    public void queueReal(String msg){
+        System.out.println("真实消费者接收到消息并自动确认：" + msg);
+    }
+
 
 }

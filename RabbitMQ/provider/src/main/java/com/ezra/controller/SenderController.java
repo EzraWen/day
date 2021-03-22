@@ -38,4 +38,15 @@ public class SenderController {
         rabbitTemplate.convertAndSend(RabbitMQConstant.QUEUE2, msg);
         return Result.SUCCESS;
     }
+
+    @PostMapping("/sendMsgDelay")
+    public Result sendMsgDelay(@RequestParam(value = "msg", required = false) String msg) {
+        if (StrUtil.isEmpty(msg)) {
+            System.out.println("msg为空，不发送到队列中");
+            return Result.SUCCESS;
+        }
+        rabbitTemplate.convertAndSend(RabbitMQConstant.QUEUE3, msg);
+        return Result.SUCCESS;
+    }
+
 }
