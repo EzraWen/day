@@ -29,7 +29,6 @@ public class HashMapTest {
         map.remove(1);
 
 
-        System.out.println(map.get(1));
 //        List<Integer> vos = new ArrayList<>();
 //        for (int i = 0; i<5;i++){
 //            vos.add(i);

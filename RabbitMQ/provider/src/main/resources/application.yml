@@ -10,5 +10,9 @@ spring:
     port: 5672
     username: guest
     password: guest
-    publisher-confirm-type:
+    publisher-confirm-type: CORRELATED
+    publisher-returns: true #开启生产者return模式
 #    ConfirmType   NONE 禁用发布确认,为默认值    CORRELATED 发布成功交换器处罚回调方法
+#                  SIMPLE 在发送到交换机时跟CORRELATED的配置效果一样,第二在发布成功后通过两个方法来判断是否节点返回结果
+#                  使用rabbitTemplate 调用waitForConfirms或waitForConfirmsOrDie方法等待broker节点返回发送结果，
+#                  根据返回结果来判定下一步的逻辑，要注意的点是waitForConfirmsOrDie方法如果返回false则会关闭channel，则接下来无法发送消息到broker

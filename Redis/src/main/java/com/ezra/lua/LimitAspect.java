@@ -17,6 +17,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Collections;
+import java.util.HashMap;
 
 @Slf4j
 @Aspect
@@ -57,6 +58,8 @@ public class LimitAspect {
             //没有限流的方法，放行
             return joinPoint.proceed();
         }
+        HashMap<Object, Object> map = new HashMap<>();
+        
 
         //达到限流次数
         Long expire =  redisTemplate.getExpire("rate:limit:"+key);

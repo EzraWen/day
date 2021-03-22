@@ -1,9 +1,10 @@
 package com.ezra.receiver;
 
+import com.ezra.constant.RabbitMQConstant;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -25,7 +26,16 @@ public class HeadersExchangeRecevier {
         channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 
-
+    /**
+     * headers模式基于注解的配置方式
+     * @param channel
+     * @param message
+     * @throws IOException
+     */
+//    @RabbitListener(bindings = @QueueBinding(
+//            value = @Queue(""),exchange = @Exchange(RabbitMQConstant.HEADERS_EXCHANGE),
+//            arguments = {@Argument(name = "name",value = "q1"),@Argument(name = "bindType",value = "all")}
+//    ))
     @RabbitListener(queues = "headers2")
     public void headers2(Channel channel, Message message) throws IOException {
         MessageProperties messageProperties = message.getMessageProperties();

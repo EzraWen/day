@@ -49,7 +49,7 @@ public class RabbitQueueConfig {
 
 
     /**
-     * 产生死信的队列
+     * 产生死信的队列,只需要队列配置,不需要实际的消费者,这样时间到期后转发给配置的死信队列
      * @return
      */
     @Bean
@@ -61,6 +61,9 @@ public class RabbitQueueConfig {
         return new Queue(RabbitMQConstant.QUEUE3,true,false,false,arguments);
     }
 
+    /**
+     * 这下面的配置可以不需要
+     */
 //    /**
 //     *
 //     * 创建延迟队列（死信队列）绑定的交换机

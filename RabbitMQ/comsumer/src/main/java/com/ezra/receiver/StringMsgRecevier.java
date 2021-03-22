@@ -17,8 +17,9 @@ public class StringMsgRecevier {
 
 
     @RabbitListener(queues = RabbitMQConstant.QUEUE1)
-    public void queue1(String msg, Channel channel) {
+    public void queue1(String msg, Channel channel,Message message) throws IOException {
         System.out.println("Queue1消费者接收到消息并自动确认：" + msg);
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
     }
 
     @RabbitListener(queues = RabbitMQConstant.QUEUE1)

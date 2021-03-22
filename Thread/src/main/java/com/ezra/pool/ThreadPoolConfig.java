@@ -30,7 +30,7 @@ public class ThreadPoolConfig {
     private static ExecutorService newFixedThreadPool(int nThreads) {
         return new ThreadPoolExecutor(nThreads, nThreads,
                 1000L, TimeUnit.SECONDS,
-                new LinkedBlockingQueue<Runnable>(10000),new ThreadFactoryBuilder().setNameFormat("Thread-pool-%d").build());
+                new LinkedBlockingQueue<Runnable>(100),new ThreadFactoryBuilder().setNameFormat("Thread-pool-%d").build());
     }
 
 
