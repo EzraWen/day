@@ -20,6 +20,7 @@
         <module>MyBatisPlus</module>
         <module>manager</module>
         <module>druid-pgsql</module>
+        <module>swaager</module>
     </modules>
 
     <parent>

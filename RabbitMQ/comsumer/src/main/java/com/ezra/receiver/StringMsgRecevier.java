@@ -18,7 +18,12 @@ public class StringMsgRecevier {
 
     @RabbitListener(queues = RabbitMQConstant.QUEUE1)
     public void queue1(String msg, Channel channel) {
-        System.out.println("消费者接收到消息并自动确认：" + msg);
+        System.out.println("Queue1消费者接收到消息并自动确认：" + msg);
+    }
+
+    @RabbitListener(queues = RabbitMQConstant.QUEUE1)
+    public void queue12(String msg, Channel channel) {
+        System.out.println("Queue12消费者接收到消息并自动确认：" + msg);
     }
 
     @RabbitListener(queues = RabbitMQConstant.QUEUE2)

@@ -10,3 +10,5 @@ spring:
     port: 5672
     username: guest
     password: guest
+    publisher-confirm-type:
+#    ConfirmType   NONE 禁用发布确认,为默认值    CORRELATED 发布成功交换器处罚回调方法

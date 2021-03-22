@@ -25,6 +25,11 @@ public class RabbitQueueConfig {
     }
 
     @Bean
+    public Queue queue12() {
+        return new Queue(RabbitMQConstant.QUEUE1);
+    }
+
+    @Bean
     public Queue queue2() {
         return new Queue(RabbitMQConstant.QUEUE2);
     }
