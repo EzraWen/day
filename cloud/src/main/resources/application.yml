@@ -1,0 +1,10 @@
+feign:
+  hystrix:
+    enabled: true
+
+ribbon:
+  ReadTimeout: 120000
+  ConnectTimeout: 120000
+
+server:
+  port: 8080

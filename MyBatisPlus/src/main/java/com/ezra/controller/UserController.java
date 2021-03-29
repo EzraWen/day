@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping(SystemConstant.API_URL + "/user")
 public class UserController {
@@ -23,6 +25,7 @@ public class UserController {
     @PostMapping("/add")
     public Result add(@RequestBody User user) {
         user.setStatus(1);
+        user.setCreateTime(LocalDateTime.now());
         boolean save = userService.save(user);
         return save ? Result.SUCCESS : Result.BUSINESS_FAIL;
     }
