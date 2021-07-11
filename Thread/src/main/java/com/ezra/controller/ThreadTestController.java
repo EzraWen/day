@@ -2,8 +2,7 @@ package com.ezra.controller;
 
 
 import com.ezra.constant.SystemConstant;
-import com.ezra.pool.ThreadPoolConfig;
-import com.ezra.task.Order1Task;
+import com.ezra.service.MomentCorpLimitService;
 import com.ezra.task.OrderTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 import java.util.concurrent.*;
 
 @RestController
@@ -23,6 +22,8 @@ public class ThreadTestController {
     @Autowired
     private ExecutorService executorService;
 
+    @Autowired
+    private MomentCorpLimitService momentCorpLimitService;
 
     @GetMapping("/test")
     public void test(@RequestParam("product") String product) {
@@ -42,6 +43,44 @@ public class ThreadTestController {
             System.out.println("超时");
         }
     }
+
+
+    @GetMapping("/test2")
+    public void test2() {
+        momentCorpLimitService.countHandler("123");
+//        List<String> data = new ArrayList<>();
+//        data.add("123");
+//        data.add("124");
+//        data.add("123");
+//        data.add("123");
+//        data.add("125");
+//        data.add("126");
+//        data.add("126");
+//
+//        ArrayList<Future> futures = new ArrayList<>();
+//        data.forEach(it->{
+//            Future<Boolean> future = executorService.submit(() ->
+//
+//            );
+//
+//            futures.add(future);
+//        });
+//
+//
+//        for (Future future : futures) {
+//            try {
+//                future.get();
+//            } catch (InterruptedException e) {
+//            } catch (ExecutionException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+
+    }
+
+
+
 
 
     /**
@@ -64,10 +103,7 @@ public class ThreadTestController {
         }
 
 
-
-
         //外层countdownlatch   带入子线程
-
         try {
             countDownLatch.await(20l, TimeUnit.SECONDS);
         } catch (InterruptedException e) {

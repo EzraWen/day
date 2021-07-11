@@ -22,7 +22,8 @@
         <module>druid-pgsql</module>
         <module>swaager</module>
         <module>cloud</module>
-
+        <module>ttt</module>
+        <module>designModel</module>
         <module>neo4j</module>
     </modules>
 

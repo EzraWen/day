@@ -1,18 +1,9 @@
-server:
-  port: 8080
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/study?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
-  data:
-    neo4j:
-      uri: bolt://81.69.234.118:7687
-      username: neo4j
-      password: 123456
-
 
 mybatis-plus:
   global-config:
